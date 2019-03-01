@@ -21,8 +21,8 @@ spec:
         release: {{ .Release.Name }}
         component: stolon-sentinel
         stolon-cluster: {{ template "stolon.fullname" . }}
-      annotations:
-        checksum/config: {{ include (print .Template.BasePath "/hooks/update-cluster-spec-job.yaml") . | sha256sum }}
+        annotations:
+          checksum/config: {{ include (print .Template.BasePath "/hooks/update-cluster-spec-job.yaml") . | sha256sum }}
 {{- with .Values.keeper.annotations }}
 {{ toYaml . | indent 8 }}
 {{- end }}
