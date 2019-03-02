@@ -11,17 +11,17 @@ image:
   pullPolicy: IfNotPresent
 
 haproxy:
-  nodeSelector: {"nodepool_name" : "redis"}
+  nodeSelector:
   # node schedulling inter-pod anti affinity
   podAntiAffinity: soft
   replicas: 1
   # resource requirements for the container
   resources:
     requests:
-      memory: 500Mi
-      cpu: 500m
+      memory: 100Mi
+      cpu: 100m
     limits:
-      memory: 1000Mi
+      memory: 200Mi
   # haproxy container frontend ports
   ports:
     master: 6379
@@ -43,9 +43,7 @@ services:
   # types available: ClusterIP | LoadBalancer
   type: LoadBalancer
   # annotations for the service endpoint
-  annotations: {
-    "cloud.google.com/load-balancer-type":"Internal"
-    }
+  annotations:
   # reserved IP for the master load balancer
   masterIP:
   # reserved IP for the master load balancer

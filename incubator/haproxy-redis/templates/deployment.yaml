@@ -10,7 +10,7 @@ spec:
   updateStrategy:
     type: RollingUpdate
   revisionHistoryLimit: 1
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.haproxy.replicas }}
   selector:
     matchLabels:
       app: {{ template "haproxy-redis.fullname" . }}
@@ -32,8 +32,10 @@ spec:
     spec:
       # Needed when using unmodified rbac-setup.yml
       serviceAccountName: {{ template "haproxy-redis.serviceAccountName" . }}
+      {{- if .Values.haproxy.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.haproxy.nodeSelector | indent 8 }}
+      {{- end }}
       {{- if eq .Values.haproxy.podAntiAffinity "hard" }}
       affinity:
         podAntiAffinity:

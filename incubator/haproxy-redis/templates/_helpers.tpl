@@ -59,14 +59,13 @@ Create the name of the service account to use
 Create HAProxy master backends list
 */}}
 {{- define "masters.list" -}}
-{{- $name := required "A valid Redis releaseName entry required!" .Values.redis.releaseName -}}
 {{- $namespace := required "A valid Redis releaseNamespace entry required!" .Values.redis.releaseNamespace -}}
 {{- $serviceName := required "A valid Redis serviceName entry required!" .Values.redis.serviceName -}}
 {{- $port := ( required "A valid Redis port entry required!" .Values.redis.port | int ) -}}
 {{- $conns := ( required "A valid Redis maxConnections entry required!" .Values.redis.maxConnections | int) -}}
 {{- $chksec := ( required "A valid Redis checkSeconds entry required!" .Values.redis.checkSeconds | int) -}}
 {{- range $i, $e := until ( required "A valid Redis replicaCount entry required!" .Values.redis.replicaCount | int ) }}
-      {{ printf "server master-%d %s-server-%d.%s.%s:%d maxconn %d check inter %ds" $i $name $i $serviceName $namespace $port $conns $chksec}}
+      {{ printf "server master-%d %s-%d.%s:%d maxconn %d check inter %ds" $i $serviceName $i $namespace $port $conns $chksec}}
 {{- end -}}
 {{- end -}}
 
@@ -74,13 +73,12 @@ Create HAProxy master backends list
 Create HAProxy slaves backends list
 */}}
 {{- define "slaves.list" -}}
-{{- $name := required "A valid Redis releaseName entry required!" .Values.redis.releaseName -}}
 {{- $namespace := required "A valid Redis releaseNamespace entry required!" .Values.redis.releaseNamespace -}}
 {{- $serviceName := required "A valid Redis serviceName entry required!" .Values.redis.serviceName -}}
 {{- $port := ( required "A valid Redis port entry required!" .Values.redis.port | int ) -}}
 {{- $conns := ( required "A valid Redis maxConnections entry required!" .Values.redis.maxConnections | int) -}}
 {{- $chksec := ( required "A valid Redis checkSeconds entry required!" .Values.redis.checkSeconds | int) -}}
 {{- range $i, $e := until ( required "A valid Redis replicaCount entry required!" .Values.redis.replicaCount | int ) }}
-      {{ printf "server slave-%d %s-server-%d.%s.%s:%d maxconn %d check inter %ds" $i $name $i $serviceName $namespace $port $conns $chksec}}
+      {{ printf "server slave-%d %s-%d.%s:%d maxconn %d check inter %ds" $i $serviceName $i $namespace $port $conns $chksec}}
 {{- end -}}
 {{- end -}}
