@@ -49,6 +49,7 @@ data:
       balance first
       option tcp-check
       tcp-check connect
+      tcp-check send AUTH\ {{ .Values.redis.auth }}\r\n
       tcp-check send PING\r\n
       tcp-check expect string +PONG
       tcp-check send info\ replication\r\n
@@ -62,6 +63,7 @@ data:
       balance first
       option tcp-check
       tcp-check connect
+      tcp-check send AUTH\ {{ .Values.redis.auth }}\r\n
       tcp-check send PING\r\n
       tcp-check expect string +PONG
       tcp-check send info\ replication\r\n
